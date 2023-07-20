@@ -48,7 +48,7 @@ Start the server
 ## Features
 
 - Download YouTube Videos in Bulk.
-- Can only Download Non-Age-Restricted Videos.
+- Cannot Download Age-Restricted Videos.
 
 
 
