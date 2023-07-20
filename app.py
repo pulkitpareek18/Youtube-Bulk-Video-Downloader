@@ -59,4 +59,4 @@ def home():
 # No match found for pattern: var for={(.*?)}; is from pytube module, not the fault of this app.
 # This app uses pytube from the GitHub repository https://github.com/pulkitpareek18/pytube
 
-# app.run()
+app.run(debug=True)
