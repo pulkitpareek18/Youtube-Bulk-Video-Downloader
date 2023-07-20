@@ -8,7 +8,6 @@ import shortuuid
 import threading
 import time
 from pytube import YouTube
-import concurrent.futures
 
 app = Flask(__name__)
 
@@ -76,11 +75,8 @@ def api():
             urlList = list()
             for data in csvFileList:
                 if validators.url(str(data[0])):
-                    urlList.append(data[0])
+                    urlList.append(getYtVideoDownloadUrl(data[0]))
 
-            with concurrent.futures.ThreadPoolExecutor() as executor:
-                results = executor.map(getYtVideoDownloadUrl, urlList)
-                urlList = list(results)
 
             return json.dumps({"success": urlList})
     else:
