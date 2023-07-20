@@ -1,13 +1,11 @@
 from flask import Flask, request, render_template
-import pandas
-import validators
 import os
 import json
-from werkzeug.utils import secure_filename
-import shortuuid
 import threading
 import time
 from pytube import YouTube
+import re
+import concurrent.futures
 
 app = Flask(__name__)
 
@@ -23,7 +21,19 @@ def cleanGarbage():
     print(f'Garbage Cleaned at {time.strftime("%m/%d/%Y, %H:%M:%S")}.')
 
 
-cleanGarbage()
+# cleanGarbage()
+
+
+
+def extract_youtube_urls(text):
+    # Regular expression pattern to match YouTube URLs
+    pattern = r"(?P<url>https?://(?:www\.|m\.)?youtube\.com/(?:watch\?v=|shorts/|embed/|v/|e/|watch\?.+&v=|youtu\.be/)(?P<id>[a-zA-Z0-9_-]+))"
+    
+    # Find all occurrences of the pattern in the text
+    matches = re.finditer(pattern, text)
+    
+    # Extract and return the URLs as a list
+    return [match.group("url") for match in matches]
 
 
 def getYtVideoDownloadUrl(ytUrl):
@@ -48,39 +58,31 @@ def allowed_file(filename):
 @app.route("/api", methods=["GET", "POST"])
 def api():
     if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            return {"error": "No File Part."}
-
-        file = request.files['file']
-
-        # If the user does not select a file, the browser submits an
-        # empty file without a filename.
-        if file.filename == '':
-            return {"error": "No File Selected."}
-
-        if not allowed_file(file.filename):
-            return {"error": "Please enter a CSV File."}
-
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            filename = ".".join(filename.split(".")[:-1]) + "_" + shortuuid.uuid() + "." + filename.split(".")[-1]
-            file.save(os.path.join(UPLOAD_FOLDER, filename))
-
-            # reading the CSV file
-            csvFile = pandas.read_csv(os.path.join(UPLOAD_FOLDER, filename))
-            csvFileList = csvFile.values.tolist()
-
-            # displaying the contents of the CSV file
+        
+        if request.form['urls']:
+            YtUrlList = extract_youtube_urls(request.form['urls'])
             urlList = list()
-            for data in csvFileList:
-                if validators.url(str(data[0])):
-                    urlList.append(getYtVideoDownloadUrl(data[0]))
-
-
+            if len(YtUrlList) != 0:
+                
+                    for url in YtUrlList:
+                        urlList.append(url)
+                        
+                    with concurrent.futures.ThreadPoolExecutor() as executor:
+                        results = executor.map(getYtVideoDownloadUrl, urlList)
+                        urlList = list(results)        
+                        
+            else:
+                
+                return json.dumps({"error":"Please Enter a valid Url."})  
+                
             return json.dumps({"success": urlList})
+            
     else:
-        return {"error": "Please make a valid Request."}
+        
+        return json.dumps({"error": "Please make a valid Request."})
+    
+    return json.dumps({"error": "Please Enter a Url."})
+
 
 
 @app.route("/")

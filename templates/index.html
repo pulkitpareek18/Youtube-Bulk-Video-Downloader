@@ -16,7 +16,7 @@
     <div class="container my-5" method="post" enctype="multipart/form-data">
         <form id="data" class="m-2" action="/api" method="post" enctype="multipart/form-data">
           <div class="mb-3">
-            <input required type="file" name="file" accept=".csv" class="form-control" />
+            <textarea placeholder="Enter your YouTube video url's here seperated by a blank line." class="form-control" name="urls" id="" rows="11"></textarea>
           </div>
           <button class="btn btn-primary">Submit</button>
         </form>
@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <div class="d-flex justify-content-center mt-5">
+    <div class="d-flex justify-content-center my-5">
       <button style="display: none;" id="downloadBtn" type="button" class="btn btn-primary btn-outline-dark">Download Videos</button>
     </div>
 

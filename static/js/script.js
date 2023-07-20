@@ -42,9 +42,11 @@ $("form#data").submit(function (e) {
       if (res.success) {
         responseDataUrls = res.success
         showToast("success","Click the Download Button Below to Download Videos.")
+        downloadBtn.style.display = "block"
+      }else{
+        showToast("danger",res.error)
       }
       spinner.style.display = "none"
-      downloadBtn.style.display = "block"
     },
     cache: false,
     contentType: false,
