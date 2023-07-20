@@ -23,7 +23,7 @@ or
 Clone the project
 
 ```bash
-  git clone https://github.com/pulkitpareek18/Youtube-Bulk-Video-Downloader-Flask
+  git clone https://github.com/pulkitpareek18/Youtube-Bulk-Video-Downloader
 ```
 
 Go to the project directory
