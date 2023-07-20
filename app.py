@@ -9,22 +9,6 @@ import concurrent.futures
 
 app = Flask(__name__)
 
-ALLOWED_EXTENSIONS = {'csv'}
-UPLOAD_FOLDER = "static/uploads"
-
-
-def cleanGarbage():
-    threading.Timer(600, cleanGarbage).start()
-    for file in os.listdir(UPLOAD_FOLDER):
-        if file != ".gitkeep":
-            os.remove(os.path.join(UPLOAD_FOLDER, file))
-    print(f'Garbage Cleaned at {time.strftime("%m/%d/%Y, %H:%M:%S")}.')
-
-
-# cleanGarbage()
-
-
-
 def extract_youtube_urls(text):
     # Regular expression pattern to match YouTube URLs
     pattern = r"(?P<url>https?://(?:www\.|m\.)?youtube\.com/(?:watch\?v=|shorts/|embed/|v/|e/|watch\?.+&v=|youtu\.be/)(?P<id>[a-zA-Z0-9_-]+))"
@@ -45,15 +29,7 @@ def getYtVideoDownloadUrl(ytUrl):
         return stream.url
     except:
         print(f"Can't download {ytUrl}")
-
-
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-
-def allowed_file(filename):
-    return '.' in filename and \
-        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
+        
 
 @app.route("/api", methods=["GET", "POST"])
 def api():
@@ -82,8 +58,6 @@ def api():
         return json.dumps({"error": "Please make a valid Request."})
     
     return json.dumps({"error": "Please Enter a Url."})
-
-
 
 @app.route("/")
 def home():
