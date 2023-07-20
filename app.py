@@ -1,11 +1,7 @@
 from flask import Flask, request, render_template
-import os
 import json
-import threading
-import time
 from pytube import YouTube
 import re
-import concurrent.futures
 
 app = Flask(__name__)
 
@@ -41,11 +37,7 @@ def api():
             if len(YtUrlList) != 0:
                 
                     for url in YtUrlList:
-                        urlList.append(url)
-                        
-                    with concurrent.futures.ThreadPoolExecutor() as executor:
-                        results = executor.map(getYtVideoDownloadUrl, urlList)
-                        urlList = list(results)        
+                        urlList.append(getYtVideoDownloadUrl(url))
                         
             else:
                 
