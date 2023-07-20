@@ -2,8 +2,9 @@ from flask import Flask, request, render_template
 import json
 from pytube import YouTube
 import re
+import concurrent.futures
 
-app = Flask(__name__)
+app = Flask(__name__,static_folder="./static",template_folder="./templates")
 
 def extract_youtube_urls(text):
     # Regular expression pattern to match YouTube URLs
@@ -35,9 +36,13 @@ def api():
             YtUrlList = extract_youtube_urls(request.form['urls'])
             urlList = list()
             if len(YtUrlList) != 0:
-                
+
                     for url in YtUrlList:
-                        urlList.append(getYtVideoDownloadUrl(url))
+                        urlList.append(url)
+
+                    with concurrent.futures.ThreadPoolExecutor() as executor:
+                        results = executor.map(getYtVideoDownloadUrl, urlList)
+                        urlList = list(results)        
                         
             else:
                 
@@ -53,10 +58,10 @@ def api():
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("index.html",name="Youtube Bulk Video Downloader")
 
 
 # No match found for pattern: var for={(.*?)}; is from pytube module, not the fault of this app.
 # This app uses pytube from the GitHub repository https://github.com/pulkitpareek18/pytube
 
-app.run(debug=True)
+app.run()
