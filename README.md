@@ -6,7 +6,7 @@ Converted to .exe using [auto-py-to-exe](https://github.com/brentvollebregt/auto
 Use the .exe app for best performance and convenience.
 
 ## Code In Action
-![](https://github.com/pulkitpareek18/Youtube-Bulk-Video-Downloader-Flask/blob/master/demo.gif)
+![](https://github.com/pulkitpareek18/Youtube-Bulk-Video-Downloader/blob/master/demo.gif)
 
 ## Demo
 
@@ -55,9 +55,9 @@ Start the server
 
 ## Acknowledgements
 
+ - [pytube](https://github.com/pytube/pytube)
  - [Pace.js](https://codebyzach.github.io/pace/e.com/project/elangosundar/awesome-README-templates)
-- [auto-py-to-exe](https://github.com/brentvollebregt/auto-py-to-exe)
-- [pytube](https://github.com/pytube/pytube)
+ - [auto-py-to-exe](https://github.com/brentvollebregt/auto-py-to-exe)
  
 
 
@@ -74,7 +74,7 @@ If you have any new ideas or have found a bug, please don't hesitate to open a P
 
 ## License
 
-[MIT](https://github.com/pulkitpareek18/Youtube-Bulk-Video-Downloader-Flask/blob/master/LICENSE)
+[MIT](https://github.com/pulkitpareek18/Youtube-Bulk-Video-Downloader/blob/master/LICENSE)
 
 
 ## Support
