@@ -3,6 +3,7 @@ import json
 from pytube import YouTube
 import re
 import concurrent.futures
+import webview
 
 app = Flask(__name__,static_folder="./static",template_folder="./templates")
 
@@ -42,7 +43,16 @@ def api():
 
                     with concurrent.futures.ThreadPoolExecutor() as executor:
                         results = executor.map(getYtVideoDownloadUrl, urlList)
-                        urlList = list(results)        
+                        urlList = list(results)
+                    
+                        urlList = list(filter(None,urlList))
+                        
+                        if len(urlList) == 0:
+                            return json.dumps({"error":"Please Check Your Internet Connection."})  
+
+                        
+                            
+                              
                         
             else:
                 
@@ -64,4 +74,8 @@ def home():
 # No match found for pattern: var for={(.*?)}; is from pytube module, not the fault of this app.
 # This app uses pytube from the GitHub repository https://github.com/pulkitpareek18/pytube
 
-app.run()
+app.run(debug=True) # Comment this line when generating a .exe with auto-py-to-exe
+
+# webview.create_window("Youtube Bulk Video Downloader",app)  
+# webview.start()  
+# Uncomment the above two lines when generating a .exe with auto-py-to-exe
