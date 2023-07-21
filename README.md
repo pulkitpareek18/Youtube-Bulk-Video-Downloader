@@ -12,7 +12,7 @@ Use the .exe app for best performance and convenience.
 
 https://youtube-bulk-video-downloader-flask.vercel.app/
 
-Enter max. 3 Urls at once(Vercel timeout problem.)
+Enter max. 3 Urls at once(Because it's a Demo Website.)
 
 ## Run Locally
 
