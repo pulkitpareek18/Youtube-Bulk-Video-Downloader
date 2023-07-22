@@ -5,6 +5,8 @@ Download all your YouTube videos in Bulk using this app.
 Converted to .exe using [auto-py-to-exe](https://github.com/brentvollebregt/auto-py-to-exe)  
 Use the .exe app for best performance and convenience.
 
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/pulkitpareek18)
+
 ## Code In Action
 ![](https://github.com/pulkitpareek18/Youtube-Bulk-Video-Downloader/blob/master/demo.gif)
 
